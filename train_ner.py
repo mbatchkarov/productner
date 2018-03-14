@@ -20,8 +20,9 @@ def main(argv):
 
     # Fetch data
     texts, tags = [], []
-    with open(sys.argv[1], 'rb') as f:
-        reader = csv.DictReader(f, fieldnames=["title","brand","description","categories","tags"])
+    with open(sys.argv[1], 'r', encoding='ISO8859') as f:
+        reader = csv.DictReader(f, fieldnames=["title", "brand",
+                                               "description", "categories", "tags"])
         count = 0
         for row in reader:
             count += 1
@@ -30,7 +31,7 @@ def main(argv):
             tags.append(tag_set)
             if count >= MAX_TEXTS:
                 break
-    print(('Processed %s texts.' % len(texts)))
+    print('Processed %s texts.' % len(texts))
 
     # Tokenize texts
     tokenizer = WordTokenizer()

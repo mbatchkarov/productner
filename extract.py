@@ -42,6 +42,7 @@ def process(row, tokenizer, classifier, ner):
         else:
             brand_started = False
     row['brand'] = brand
+    row['title_tokens'] = data
 
     return row
 
