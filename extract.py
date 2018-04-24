@@ -26,6 +26,7 @@ def process(row, tokenizer, classifier, ner):
     data = tokenizer.tokenize([row['name'] + ' ' + row['description']])
     categories = classifier.classify(data)[0]
     row['category'] = max(categories.items(), key=itemgetter(1))[0]
+    row['category_prob'] = max(categories.values())
 
     # Extract entities
     data = tokenizer.tokenize([row['name']])
@@ -72,13 +73,12 @@ def main(argv):
     with open(data_file, 'rb') as f:
         reader = csv.DictReader(f)
         outfile = open('.'.join(data_file.split('.')[:-1] + ['processed', 'csv']), 'wb')
-        writer = csv.DictWriter(outfile, fieldnames=reader.fieldnames + ['category', 'brand'])
+        writer = csv.DictWriter(outfile, fieldnames=reader.fieldnames + ['category', 'category_prob', 'brand'])
         writer.writeheader()
         count = 0
         for row in reader:
             count += 1
             processed_row = process(row, tokenizer, classifier, ner)
-            print(processed_row)
             writer.writerow(processed_row)
 
 if __name__ == "__main__":

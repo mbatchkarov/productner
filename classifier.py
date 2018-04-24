@@ -97,7 +97,7 @@ class ProductClassifier(object):
         labels = to_categorical(np.asarray(indexed_categories))
         return labels
 
-    def compile(self, tokenizer, glove_dir='./data/', embedding_dim=100, dropout_fraction=0.0, kernal_size=5, n_filters=128):
+    def compile(self, tokenizer, glove_dir='./data/', embedding_dim=50, dropout_fraction=0.0, kernal_size=5, n_filters=128):
         """Compile network model for classifier
 
         Args:

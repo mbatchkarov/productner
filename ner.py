@@ -107,7 +107,7 @@ class ProductNER(object):
         labels = pad_sequences(labels, maxlen=200)
         return labels
 
-    def compile(self, tokenizer, glove_dir='./data/', embedding_dim=200, dropout_fraction=0.2, hidden_dim=32):
+    def compile(self, tokenizer, glove_dir='./data/', embedding_dim=50, dropout_fraction=0.2, hidden_dim=32):
         """Compile network model for NER
 
         Args:

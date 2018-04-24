@@ -4,6 +4,7 @@
 import sys, csv
 from tokenizer import WordTokenizer
 from classifier import ProductClassifier
+from collections import Counter
 
 MAX_TEXTS = 1000000
 
@@ -25,12 +26,25 @@ def main(argv):
         count = 0
         for row in reader:
             count += 1
-            text, category = row['description'], row['categories'].split(' / ')[0]
+            # TODO change here what we train on, and what categories are used
+            text, category = row['title'], row['categories'].split(' / ')[0]
             texts.append(text)
             categories.append(category)
             if count >= MAX_TEXTS:
                 break
     print('Processed %s texts.' % len(texts))
+
+    tmpx, tmpy = [], []
+    c = Counter(categories)
+    for x, y in zip(texts, categories):
+        if c[y] > 200:
+            tmpx.append(x)
+            tmpy.append(y)
+
+    texts = tmpx
+    categories = tmpy
+
+    print Counter(tmpy)
 
     # Tokenize texts
     tokenizer = WordTokenizer()
