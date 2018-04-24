@@ -52,12 +52,7 @@ FORMAT: "id","name","description","price"
 """
     sys.exit(0)
 
-def main(argv):
-    if len(argv) < 3:
-        usage()
-    model_dir = sys.argv[1]
-    data_file = sys.argv[2]
-
+def load_models(model_dir):
     # Load tokenizer
     tokenizer = WordTokenizer()
     tokenizer.load(os.path.join(model_dir, 'tokenizer'))
@@ -69,6 +64,16 @@ def main(argv):
     # Load named entity recognizer
     ner = ProductNER()
     ner.load(os.path.join(model_dir, 'ner'))
+
+    return tokenizer, classifier, ner
+
+def main(argv):
+    if len(argv) < 3:
+        usage()
+    model_dir = sys.argv[1]
+    data_file = sys.argv[2]
+
+    tokenizer, classifier, ner = load_models(model_dir)
 
     with open(data_file, 'rb') as f:
         reader = csv.DictReader(f)
